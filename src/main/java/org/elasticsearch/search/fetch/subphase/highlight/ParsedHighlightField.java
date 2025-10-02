@@ -10,7 +10,7 @@
 package org.elasticsearch.search.fetch.subphase.highlight;
 
 import org.elasticsearch.common.ParsingException;
-import org.elasticsearch.common.text.Text;
+import org.elasticsearch.xcontent.Text;
 import org.elasticsearch.xcontent.XContentParser;
 
 import java.io.IOException;

@@ -9,7 +9,7 @@
 package org.elasticsearch.action.update;
 
 import org.elasticsearch.action.ParsedDocWriteResponse;
-import org.elasticsearch.index.get.GetResult;
+import org.elasticsearch.index.get.ParsedGetResult;
 import org.elasticsearch.xcontent.XContentParser;
 
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class ParsedUpdateResponse {
 
         if (UpdateResponse.GET.equals(currentFieldName)) {
             if (token == XContentParser.Token.START_OBJECT) {
-                context.setGetResult(GetResult.fromXContentEmbedded(parser));
+                context.setGetResult(ParsedGetResult.fromXContentEmbedded(parser));
             }
         } else {
             ParsedDocWriteResponse.parseInnerToXContent(parser, context);

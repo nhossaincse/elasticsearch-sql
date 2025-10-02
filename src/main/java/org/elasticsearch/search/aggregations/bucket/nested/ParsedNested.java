@@ -12,7 +12,7 @@ import org.elasticsearch.xcontent.XContentParser;
 
 import java.io.IOException;
 
-public class ParsedNested extends ParsedSingleBucketAggregation implements Nested {
+public class ParsedNested extends ParsedSingleBucketAggregation {
 
     @Override
     public String getType() {

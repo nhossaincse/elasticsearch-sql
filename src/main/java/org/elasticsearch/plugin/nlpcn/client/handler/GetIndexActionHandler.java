@@ -53,7 +53,7 @@ public class GetIndexActionHandler extends ActionHandler<org.elasticsearch.actio
         GetIndexRequest.Builder builder = new GetIndexRequest.Builder();
         builder.index(Arrays.asList(getIndexRequest.indices()));
         builder.includeDefaults(getIndexRequest.includeDefaults());
-        builder.local(getIndexRequest.local());
+        //builder.local(getIndexRequest.local());
         for (org.elasticsearch.action.admin.indices.get.GetIndexRequest.Feature feature : getIndexRequest.features()) {
             builder.features(getFeature(feature));
         }
@@ -62,7 +62,7 @@ public class GetIndexActionHandler extends ActionHandler<org.elasticsearch.actio
             builder.ignoreUnavailable(options.ignoreUnavailable());
             builder.expandWildcards(getExpandWildcard(options.wildcardOptions()));
         });
-        Optional.ofNullable(getIndexRequest.masterNodeTimeout()).ifPresent(e -> builder.masterTimeout(Time.of(t -> t.time(e.toString()))));
+        Optional.ofNullable(getIndexRequest.masterTimeout()).ifPresent(e -> builder.masterTimeout(Time.of(t -> t.time(e.toString()))));
         return builder.build();
     }
 

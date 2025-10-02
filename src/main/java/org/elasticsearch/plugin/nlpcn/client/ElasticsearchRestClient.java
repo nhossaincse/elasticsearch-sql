@@ -40,7 +40,7 @@ public class ElasticsearchRestClient extends AbstractClient implements AutoClose
     private final Map<String, ActionHandler<ActionRequest, ?, ?, ActionResponse>> handlers = Maps.newHashMap();
 
     public ElasticsearchRestClient(ElasticsearchClient client) {
-        super(null, null);
+        super(null, null, null);
 
         this.client = client;
         registerHandler(client);

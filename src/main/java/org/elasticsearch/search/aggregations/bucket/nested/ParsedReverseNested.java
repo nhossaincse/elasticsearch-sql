@@ -12,7 +12,7 @@ import org.elasticsearch.xcontent.XContentParser;
 
 import java.io.IOException;
 
-public class ParsedReverseNested extends ParsedSingleBucketAggregation implements ReverseNested {
+public class ParsedReverseNested extends ParsedSingleBucketAggregation {
 
     @Override
     public String getType() {

@@ -2,6 +2,7 @@ package org.nlpcn.es4sql;
 
 import org.elasticsearch.client.internal.Client;
 import org.elasticsearch.client.internal.node.NodeClient;
+import org.elasticsearch.cluster.project.DefaultProjectResolver;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.telemetry.metric.MeterRegistry;
 import org.elasticsearch.threadpool.DefaultBuiltInExecutorBuilders;
@@ -24,7 +25,7 @@ public class Test {
 //                .build();
 
         ThreadPool threadPool = new ThreadPool(settings, MeterRegistry.NOOP, new DefaultBuiltInExecutorBuilders());
-        Client client = new NodeClient(settings, threadPool);
+        Client client = new NodeClient(settings, threadPool, DefaultProjectResolver.INSTANCE);
         SearchDao searchDao = new org.nlpcn.es4sql.SearchDao(client);
         try {
             return searchDao.explain(sql).explain().explain();

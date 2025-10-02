@@ -12,7 +12,7 @@ import org.elasticsearch.xcontent.XContentParser;
 
 import java.io.IOException;
 
-public class ParsedSampler extends ParsedSingleBucketAggregation implements Sampler {
+public class ParsedSampler extends ParsedSingleBucketAggregation {
 
     @Override
     public String getType() {

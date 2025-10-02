@@ -23,12 +23,16 @@ import org.elasticsearch.cluster.metadata.IndexMetadata;
 import org.elasticsearch.cluster.metadata.IndexTemplateMetadata;
 import org.elasticsearch.cluster.metadata.MappingMetadata;
 import org.elasticsearch.cluster.metadata.Metadata;
+import org.elasticsearch.cluster.metadata.ProjectId;
+import org.elasticsearch.cluster.metadata.ProjectMetadata;
 import org.elasticsearch.cluster.metadata.ReservedStateMetadata;
 import org.elasticsearch.cluster.node.DiscoveryNode;
 import org.elasticsearch.cluster.node.DiscoveryNodeRole;
 import org.elasticsearch.cluster.node.DiscoveryNodes;
 import org.elasticsearch.cluster.node.VersionInformation;
+import org.elasticsearch.cluster.routing.GlobalRoutingTable;
 import org.elasticsearch.cluster.routing.RoutingTable;
+import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.compress.CompressedXContent;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
@@ -196,7 +200,11 @@ public class ClusterStateActionHandler extends ActionHandler<ClusterStateRequest
                     ByteSizeValue.parseBytesSizeValue(disk.getString(KEY_FROZEN_FLOOD_STAGE_MAX_HEADROOM), KEY_FROZEN_FLOOD_STAGE_MAX_HEADROOM)),
                     new HealthMetadata.ShardLimits(shardLimits.getInt(KEY_MAX_SHARDS_PER_NODE), shardLimits.getInt(KEY_MAX_SHARDS_PER_NODE_FROZEN))));
         }
-        RoutingTable routingTable = RoutingTable.EMPTY_ROUTING_TABLE;
+        Map<ProjectId, RoutingTable> map = new HashMap<>(metadata.projects().size());
+        for (Map.Entry<ProjectId, ProjectMetadata> entry : metadata.projects().entrySet()) {
+            map.put(entry.getKey(), RoutingTable.EMPTY_ROUTING_TABLE);
+        }
+        GlobalRoutingTable routingTable = new GlobalRoutingTable(ImmutableOpenMap.builder(map).build());
         ClusterBlocks blocks = ClusterBlocks.EMPTY_CLUSTER_BLOCK;
         return new ClusterStateResponse(clusterName,
                 new ClusterState(clusterName, version, stateUUID, metadata, routingTable, nodesBuilder.build(), Collections.emptyMap(), new ClusterFeatures(Collections.emptyMap()), blocks, customs, false, null),
